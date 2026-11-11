@@ -1,15 +1,16 @@
+# 🎥 TeleCam
+
 <div align="center">
 
-# 🎥 TeleCam 
+### Your Personal, Secure, Cloud-Connected Webcam
 
-**Your Personal, Secure, Cloud-Connected Webcam.**
+![Python](https://img.shields.io/badge/Python-3.10%2B-blue.svg)
+![Platform](https://img.shields.io/badge/Platform-Windows-0078D6.svg)
+![Telegram](https://img.shields.io/badge/Telegram-Bot%20API-2CA5E0.svg)
+![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-green.svg)
+![License](https://img.shields.io/badge/License-MIT-yellow.svg)
 
-[![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-blue.svg)](https://www.python.org/)
-[![Windows](https://img.shields.io/badge/Platform-Windows-0078D6.svg)](https://www.microsoft.com/windows)
-[![Telegram API](https://img.shields.io/badge/Telegram-Bot%20API-2CA5E0.svg)](https://core.telegram.org/bots/api)
-[![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-green.svg)](https://opencv.org/)
-
-TeleCam is a lightweight Windows automation tool that silently captures images from your laptop's webcam at regular intervals and securely delivers them directly to your Telegram account. 
+**TeleCam** is a lightweight Python-based Windows webcam automation application that captures images during an explicitly authorized camera session and delivers them directly to your personal Telegram account.
 
 </div>
 
@@ -17,106 +18,272 @@ TeleCam is a lightweight Windows automation tool that silently captures images f
 
 ## ✨ Features
 
-*   🛡️ **Consent-First Architecture:** The application will never access your camera without explicit user authorization via a startup popup.
-*   🕵️ **Stealth Background Mode:** Runs completely silently in the Windows System Tray. No annoying console windows.
-*   📸 **Automated Scheduling:** Captures and sends an image every 10 seconds (configurable).
-*   🌐 **Smart Network Monitor:** If your internet drops, TeleCam waits safely and resumes automatically once connection is restored.
-*   🔒 **Secure Credentials:** Uses `.env` files to ensure API keys and Chat IDs are never hardcoded or exposed on GitHub.
-*   🔴 **Visual Status Indicator:** The tray icon changes color (Red/Green) so you always know when the camera is active.
-*   🚀 **Auto-Start:** Includes a custom `.vbs` script to launch the app seamlessly on Windows login.
+- 🛡️ **Consent-First Architecture:** Camera access starts only after explicit user authorization.
+- 🖥️ **System Tray Integration:** Runs unobtrusively in the Windows system tray without an unnecessary application window.
+- 📸 **Automated Scheduling:** Automatically captures and sends images at configurable intervals (default: 10 seconds) during an authorized session.
+- 🌐 **Smart Network Monitor:** Detects internet connectivity and waits for the connection to return before attempting delivery.
+- 🔒 **Secure Credentials:** Uses environment variables and `.env` files to protect Telegram API credentials.
+- 🔴 **Visual Status Indicator:** Tray icon changes color to communicate the camera's active or inactive state.
+- 🚀 **Windows Auto-Start:** Includes a custom `.vbs` launcher for starting the application when Windows boots.
+- 🧹 **Safe Shutdown:** Releases the webcam and terminates background tasks when the application exits.
 
 ---
 
 ## 🛠️ Tech Stack
 
-*   **Core:** Python 3
-*   **Computer Vision:** OpenCV (`cv2`)
-*   **UI / Tray:** `pystray`, `Pillow`, `tkinter`
-*   **Network:** `requests`
-*   **Security:** `python-dotenv`
+| Technology | Purpose |
+|---|---|
+| Python 3 | Core application |
+| OpenCV | Webcam access and image capture |
+| Telegram Bot API | Image delivery |
+| Requests | HTTP communication |
+| python-dotenv | Environment configuration |
+| pystray | Windows system tray |
+| Pillow | Tray icon generation |
+| Tkinter | Consent interface |
+| Threading | Background execution |
 
 ---
 
 ## 🚀 Installation & Setup
 
 ### 1. Prerequisites
-*   Windows OS
-*   Python 3.10 or higher installed.
+
+- Windows 10 or Windows 11
+- Python 3.10 or higher
+- A working webcam
+- An active internet connection
+- A Telegram account
 
 ### 2. Clone the Repository
+
+Open PowerShell or the VS Code terminal:
+
 ```bash
 git clone https://github.com/dushant2301/TeleCam.git
+```
+
+Navigate into the project directory:
+
+```bash
 cd TeleCam
+```
 
-3. Install Dependencies
-bash
+### 3. Install Dependencies
+
+Install all required Python packages:
+
+```bash
 pip install -r requirements.txt
-🤖 Telegram Bot Integration (Crucial Step)
-To receive the images, you need to create a Telegram Bot and get your Chat ID.
+```
 
-Step A: Create the Bot & Get Token
-Open Telegram and search for BotFather.
+---
 
-Send the command /newbot.
+## 🤖 Telegram Bot Integration
 
-Give your bot a name (e.g., My TeleCam) and a username (must end in bot, e.g., MyTeleCam_bot).
+To receive captured images, you need to create a Telegram bot and configure your Chat ID.
 
-BotFather will give you an HTTP API Token. It looks like 123456789:ABCdefGHIjklMNOpqrSTUvwxYZ. Copy this.
+### Step A: Create a Telegram Bot
 
-Step B: Get your Chat ID
-Search for userinfobot on Telegram and start a chat.
+1. Open Telegram.
+2. Search for [BotFather](https://t.me/BotFather).
+3. Send the command `/newbot`.
+4. Enter a name for your bot, such as `My TeleCam`.
+5. Choose a username ending in `bot`, such as `MyTeleCam_bot`.
+6. BotFather will generate an HTTP API token.
+7. Copy and securely store this token.
 
-It will instantly reply with your Id (e.g., 123456789). Copy this.
+### Step B: Get Your Telegram Chat ID
 
-Important: Go to your newly created bot and click Start so it has permission to message you.
+1. Search for [userinfobot](https://t.me/userinfobot) on Telegram.
+2. Start a conversation with the bot.
+3. It will display your Telegram user ID.
+4. Copy the ID.
+5. Open your newly created Telegram bot and press **Start**.
 
-Step C: Configure .env
-Navigate to the config/ folder in this project.
+### Step C: Configure Environment Variables
 
-Rename the file .env.example to .env.
+Navigate to the `config/` directory.
 
-Open .env and paste your credentials:
+Create a file named `.env` or rename `.env.example` to `.env`.
 
-env
-TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrSTUvwxYZ
-TELEGRAM_CHAT_ID=123456789
-⚠️ SECURITY WARNING: Never commit your .env file to GitHub. It is already listed in .gitignore to protect you.
+Add your credentials:
 
-💻 Usage
-Manual Run (For Testing)
-Open a terminal and run:
+```env
+TELEGRAM_BOT_TOKEN=YOUR_BOT_TOKEN
+TELEGRAM_CHAT_ID=YOUR_CHAT_ID
+```
 
-bash
+Replace the placeholders with your actual credentials.
+
+> ⚠️ **Security Warning:** Never upload your `.env` file to GitHub. Keep it excluded through `.gitignore`. If your bot token is accidentally exposed, regenerate it using BotFather.
+
+---
+
+## 💻 Usage
+
+### Manual Application Launch
+
+Open the project directory in your terminal and execute:
+
+```bash
 python main.py
-A consent window will pop up. Click Yes.
+```
 
-Check your system tray (bottom right of Windows). You will see a green icon.
+Application workflow:
 
-The icon will turn Red, capture an image, send it to Telegram, and turn Green again.
+1. The application starts.
+2. A consent window requests permission to activate the webcam session.
+3. After authorization, the application runs in the system tray.
+4. The tray icon indicates the camera status.
+5. During the authorized session, images are captured at the configured interval.
+6. Captured images are delivered to your configured Telegram account.
+7. Right-click the tray icon and select **Exit** to close the application.
 
-To stop the application, right-click the tray icon and select Exit.
+### Start Automatically on Windows Boot
 
-Start on Windows Boot (Silent Mode)
-To make TeleCam run automatically when you turn on your PC:
+TeleCam includes a `startup.vbs` script for Windows startup integration.
 
-Open startup.vbs in a text editor.
+Follow these steps:
 
-Update the pythonPath and projectFolder to match your exact PC paths.
+1. Open `startup.vbs` in a text editor.
+2. Update the Python executable path.
+3. Update the project directory path.
+4. Press `Win + R`.
+5. Enter:
 
-Press Win + R, type shell:startup, and press Enter.
+```text
+shell:startup
+```
 
-Create a shortcut of startup.vbs and paste it into this Startup folder.
+6. Press Enter.
+7. Place a shortcut to `startup.vbs` inside the Startup folder.
 
-📁 Project Structure
-File	Responsibility
-main.py	Main entry point, consent UI, and threading coordinator.
-tray.py	Handles the Windows System Tray icon and Exit menu.
-camera.py	Opens the webcam, captures the frame, and saves it.
-telegram.py	Handles the Telegram sendPhoto API request.
-network_monitor.py	Pings Google to verify internet availability.
-startup.vbs	Silent launcher for Windows boot.
-config/.env	Stores your private Telegram Tokens (Ignored by Git).
-📜 License
-Distributed under the MIT License. See LICENSE for more information.
+The application will launch automatically when Windows starts. Camera access still requires the application's explicit authorization.
 
-<div align="center"> <i>Built with ❤️ for privacy and automation.</i> </div> ```
+---
+
+## 📁 Project Structure
+
+```text
+TeleCam/
+│
+├── config/
+│   ├── .env
+│   └── .env.example
+│
+├── captures/
+│
+├── main.py
+├── tray.py
+├── camera.py
+├── webcam.py
+├── telegram.py
+├── network_monitor.py
+├── scheduler.py
+│
+├── startup.vbs
+├── requirements.txt
+├── .gitignore
+├── LICENSE
+└── README.md
+```
+
+### File Responsibilities
+
+| File | Responsibility |
+|---|---|
+| `main.py` | Main application entry point and threading coordinator |
+| `tray.py` | Windows system tray interface and Exit functionality |
+| `camera.py` | Webcam initialization, image capture and image saving |
+| `webcam.py` | Webcam-related functionality and testing |
+| `telegram.py` | Telegram Bot API integration and image delivery |
+| `network_monitor.py` | Internet connectivity detection |
+| `scheduler.py` | Configurable automatic capture scheduling |
+| `startup.vbs` | Windows startup launcher |
+| `config/.env` | Private Telegram credentials |
+| `requirements.txt` | Python dependencies |
+| `.gitignore` | Excludes sensitive and temporary files |
+
+---
+
+## ⚙️ Configuration
+
+The capture interval can be customized according to your requirements.
+
+Default interval:
+
+```python
+CAPTURE_INTERVAL = 10
+```
+
+The interval is measured in seconds.
+
+For example:
+
+```python
+CAPTURE_INTERVAL = 30
+```
+
+This changes the interval to 30 seconds.
+
+---
+
+## 🔐 Privacy & Security
+
+TeleCam is designed around user consent and responsible webcam access.
+
+- Camera access requires explicit authorization.
+- Camera activity must remain apparent to the laptop user.
+- Captured images should only be sent to the configured, authorized Telegram recipient.
+- Telegram credentials must remain private.
+- The webcam must be released when the application exits.
+- Users should not use the application to photograph people without their knowledge or permission.
+
+---
+
+## 🧪 Testing
+
+Before using the application regularly, verify the following:
+
+- [ ] Python dependencies install successfully.
+- [ ] Webcam is detected correctly.
+- [ ] Consent interface works.
+- [ ] Tray icon appears.
+- [ ] Camera status indicator updates correctly.
+- [ ] Manual image capture works.
+- [ ] Telegram image delivery works.
+- [ ] Internet disconnection is handled.
+- [ ] Automatic scheduling works during an authorized session.
+- [ ] Exit closes the application and releases the webcam.
+- [ ] Windows startup integration works.
+
+---
+
+## 🛣️ Future Improvements
+
+- [ ] Improved camera status notifications.
+- [ ] Configurable capture intervals through a settings interface.
+- [ ] Improved retry and delivery handling.
+- [ ] Capture history and delivery logs.
+- [ ] Image compression for faster Telegram delivery.
+- [ ] Better application startup and shutdown management.
+- [ ] Packaging as a standalone Windows executable.
+
+---
+
+## 📜 License
+
+This project is distributed under the MIT License.
+
+See the [LICENSE](LICENSE) file for more information.
+
+---
+
+<div align="center">
+
+### Built with ❤️ using Python
+
+**TeleCam — Simple. Secure. Automated.**
+
+</div>
