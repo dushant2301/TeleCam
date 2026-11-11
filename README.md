@@ -283,6 +283,15 @@ See the [LICENSE](LICENSE) file for more information.
 <div align="center">
 
 ### Built with ❤️ using Python
+<div align="center">
+
+Developed by Dushant Sewatkar
+
+GitHub · TeleCam Repository
+
+© 2026 Dushant Sewatkar
+
+</div>
 
 **TeleCam — Simple. Secure. Automated.**
 
