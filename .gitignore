@@ -1,0 +1,14 @@
+# Secrets
+config/.env
+
+# Images & Captures
+captures/
+*.jpg
+*.png
+
+# Python Cache
+__pycache__/
+*.pyc
+
+# OS files
+Thumbs.db
