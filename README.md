@@ -48,3 +48,75 @@ TeleCam is a lightweight Windows automation tool that silently captures images f
 git clone https://github.com/dushant2301/TeleCam.git
 cd TeleCam
 
+3. Install Dependencies
+bash
+pip install -r requirements.txt
+🤖 Telegram Bot Integration (Crucial Step)
+To receive the images, you need to create a Telegram Bot and get your Chat ID.
+
+Step A: Create the Bot & Get Token
+Open Telegram and search for BotFather.
+
+Send the command /newbot.
+
+Give your bot a name (e.g., My TeleCam) and a username (must end in bot, e.g., MyTeleCam_bot).
+
+BotFather will give you an HTTP API Token. It looks like 123456789:ABCdefGHIjklMNOpqrSTUvwxYZ. Copy this.
+
+Step B: Get your Chat ID
+Search for userinfobot on Telegram and start a chat.
+
+It will instantly reply with your Id (e.g., 123456789). Copy this.
+
+Important: Go to your newly created bot and click Start so it has permission to message you.
+
+Step C: Configure .env
+Navigate to the config/ folder in this project.
+
+Rename the file .env.example to .env.
+
+Open .env and paste your credentials:
+
+env
+TELEGRAM_BOT_TOKEN=123456789:ABCdefGHIjklMNOpqrSTUvwxYZ
+TELEGRAM_CHAT_ID=123456789
+⚠️ SECURITY WARNING: Never commit your .env file to GitHub. It is already listed in .gitignore to protect you.
+
+💻 Usage
+Manual Run (For Testing)
+Open a terminal and run:
+
+bash
+python main.py
+A consent window will pop up. Click Yes.
+
+Check your system tray (bottom right of Windows). You will see a green icon.
+
+The icon will turn Red, capture an image, send it to Telegram, and turn Green again.
+
+To stop the application, right-click the tray icon and select Exit.
+
+Start on Windows Boot (Silent Mode)
+To make TeleCam run automatically when you turn on your PC:
+
+Open startup.vbs in a text editor.
+
+Update the pythonPath and projectFolder to match your exact PC paths.
+
+Press Win + R, type shell:startup, and press Enter.
+
+Create a shortcut of startup.vbs and paste it into this Startup folder.
+
+📁 Project Structure
+File	Responsibility
+main.py	Main entry point, consent UI, and threading coordinator.
+tray.py	Handles the Windows System Tray icon and Exit menu.
+camera.py	Opens the webcam, captures the frame, and saves it.
+telegram.py	Handles the Telegram sendPhoto API request.
+network_monitor.py	Pings Google to verify internet availability.
+startup.vbs	Silent launcher for Windows boot.
+config/.env	Stores your private Telegram Tokens (Ignored by Git).
+📜 License
+Distributed under the MIT License. See LICENSE for more information.
+
+<div align="center"> <i>Built with ❤️ for privacy and automation.</i> </div> ```
